@@ -1,5 +1,6 @@
 package com.github.cursospringboot.services;
 
+import com.github.cursospringboot.dto.ClienteDTO;
 import com.github.cursospringboot.models.Cliente;
 import com.github.cursospringboot.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,5 +16,13 @@ public class ClienteService {
 
     public List<Cliente> listarClientes(){
         return repository.findAll();
+    }
+
+    public Cliente criar(ClienteDTO dto){
+        Cliente cliente = Cliente.builder()
+                            .nome(dto.getNome())
+                            .email(dto.getEmail())
+                            .build();
+        return repository.save(cliente);
     }
 }
