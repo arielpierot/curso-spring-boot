@@ -1,9 +1,14 @@
 package com.github.cursospringboot.services;
 
+import br.com.six2six.fixturefactory.Fixture;
+import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 import com.github.cursospringboot.dto.ClienteDTO;
 import com.github.cursospringboot.models.Cliente;
 import com.github.cursospringboot.repositories.ClienteRepository;
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,6 +28,11 @@ public class ClienteServiceTest {
     @InjectMocks
     private ClienteService service;
 
+    @BeforeEach
+    void setup(){
+        FixtureFactoryLoader.loadTemplates("fixtures");
+    }
+
     @Test
     void testListar(){
         Cliente cliente = Mockito.mock(Cliente.class);
@@ -35,13 +45,12 @@ public class ClienteServiceTest {
     @Test
     void testCriar(){
         ClienteDTO clienteDTO = Mockito.mock(ClienteDTO.class);
-        UUID uuidMock = UUID.randomUUID();
-        Cliente clienteMock = new Cliente(uuidMock, "Ariel", "ariel.pierot@viavarejo.com.br");
+        Cliente clienteMock = Fixture.from(Cliente.class).gimme("outros");
         Mockito.when(repository.save(Mockito.any(Cliente.class))).thenReturn(clienteMock);
         Cliente clienteSalvo = service.criar(clienteDTO);
-        Assertions.assertEquals("Ariel", clienteSalvo.getNome());
-        Assertions.assertEquals("ariel.pierot@viavarejo.com.br", clienteSalvo.getEmail());
-        Assertions.assertEquals(uuidMock, clienteSalvo.getId());
+        Assertions.assertEquals("Paulo", clienteSalvo.getNome());
+        Assertions.assertEquals(clienteMock.getEmail(), clienteSalvo.getEmail());
+        Assertions.assertEquals(clienteMock.getId(), clienteSalvo.getId());
         Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(Cliente.class));
     }
 
