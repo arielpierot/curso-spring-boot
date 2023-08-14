@@ -46,12 +46,12 @@ public class ClienteServiceTest {
     void testCriar(){
         ClienteDTO clienteDTO = Mockito.mock(ClienteDTO.class);
         Cliente clienteMock = Fixture.from(Cliente.class).gimme("outros");
-        Mockito.when(repository.save(Mockito.any(Cliente.class))).thenReturn(clienteMock);
+        Mockito.when(repository.insert(Mockito.any(Cliente.class))).thenReturn(clienteMock);
         Cliente clienteSalvo = service.criar(clienteDTO);
         Assertions.assertEquals("Paulo", clienteSalvo.getNome());
         Assertions.assertEquals(clienteMock.getEmail(), clienteSalvo.getEmail());
         Assertions.assertEquals(clienteMock.getId(), clienteSalvo.getId());
-        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(Cliente.class));
+        Mockito.verify(repository, Mockito.times(1)).insert(Mockito.any(Cliente.class));
     }
 
 }

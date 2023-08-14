@@ -16,15 +16,19 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repository;
 
+    public ClienteService(ClienteRepository repository) {
+        this.repository = repository;
+    }
+
     public List<Cliente> listarClientes() {
         return repository.findAll();
     }
 
     public Cliente criar(ClienteDTO dto) {
-        return repository.save(ClienteMapper.INSTANCE.toModel(dto));
+        return repository.insert(ClienteMapper.INSTANCE.toModel(dto));
     }
 
-    public Cliente atualizar(UUID id, ClienteDTO dto){
+    public Cliente atualizar(String id, ClienteDTO dto){
         Cliente cliente = repository.findById(id).orElseThrow();
         cliente.setNome(dto.getNome());
         cliente.setEmail(dto.getEmail());
@@ -32,7 +36,7 @@ public class ClienteService {
         return cliente;
     }
 
-    public void deletar(UUID id) {
+    public void deletar(String id) {
         repository.deleteById(id);
     }
 }

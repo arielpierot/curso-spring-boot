@@ -33,13 +33,13 @@ public class ClienteController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Cliente> atualizar(@RequestBody ClienteDTO clienteDTO, @PathVariable UUID id){
+    public ResponseEntity<Cliente> atualizar(@RequestBody ClienteDTO clienteDTO, @PathVariable String id){
         Cliente clienteAtualizado = service.atualizar(id, clienteDTO);
         return new ResponseEntity<>(clienteAtualizado, HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deletar(@PathVariable UUID id) {
+    public ResponseEntity<?> deletar(@PathVariable String id) {
         service.deletar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
