@@ -11,7 +11,7 @@ public class ClienteFixture implements TemplateLoader {
     @Override
     public void load() {
         Fixture.of(Cliente.class).addTemplate("base", new Rule(){{
-            add(Cliente.Fields.id, UUID.randomUUID());
+            add(Cliente.Fields.id, "123");
             add(Cliente.Fields.nome, "Ariel");
             add(Cliente.Fields.email, "ariel.pierot@viavarejo.com.br");
         }});

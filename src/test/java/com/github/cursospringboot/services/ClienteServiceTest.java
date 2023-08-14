@@ -5,9 +5,7 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 import com.github.cursospringboot.dto.ClienteDTO;
 import com.github.cursospringboot.models.Cliente;
 import com.github.cursospringboot.repositories.ClienteRepository;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +15,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
 public class ClienteServiceTest {
@@ -29,12 +26,12 @@ public class ClienteServiceTest {
     private ClienteService service;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         FixtureFactoryLoader.loadTemplates("fixtures");
     }
 
     @Test
-    void testListar(){
+    void testListar() {
         Cliente cliente = Mockito.mock(Cliente.class);
         Mockito.when(repository.findAll()).thenReturn(List.of(cliente));
         List<Cliente> lista = service.listarClientes();
@@ -43,7 +40,7 @@ public class ClienteServiceTest {
     }
 
     @Test
-    void testCriar(){
+    void testCriar() {
         ClienteDTO clienteDTO = Mockito.mock(ClienteDTO.class);
         Cliente clienteMock = Fixture.from(Cliente.class).gimme("outros");
         Mockito.when(repository.insert(Mockito.any(Cliente.class))).thenReturn(clienteMock);
