@@ -1,6 +1,5 @@
 package com.github.cursospringboot.repositories;
 
-import ch.qos.logback.core.net.server.Client;
 import com.github.cursospringboot.models.Cliente;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
