@@ -5,11 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-@EnableMongoRepositories("com.github.cursospringboot.repositories")
+@EnableMongoRepositories
 public class CursoSpringBootApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CursoSpringBootApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(CursoSpringBootApplication.class, args);
+    }
 }

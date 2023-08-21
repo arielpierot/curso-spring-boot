@@ -34,18 +34,21 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<Cliente> criar(@RequestBody ClienteDTO clienteDTO){
         Cliente clienteCriado = service.criar(clienteDTO);
+        logger.info("Cliente {} criado com sucesso", clienteCriado.getId());
         return new ResponseEntity<>(clienteCriado, HttpStatus.OK);
     }
 
     @PutMapping("{id}")
     public ResponseEntity<Cliente> atualizar(@RequestBody ClienteDTO clienteDTO, @PathVariable String id){
         Cliente clienteAtualizado = service.atualizar(id, clienteDTO);
+        logger.info("Cliente {} atualizado com sucesso", clienteAtualizado.getId());
         return new ResponseEntity<>(clienteAtualizado, HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deletar(@PathVariable String id) {
         service.deletar(id);
+        logger.info("Cliente {} deletado com sucesso", id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
