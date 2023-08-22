@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 
-@Entity
-@Table(name = "clientes")
+@Document(collection = "clientes")
 @Builder
 @Data
 @NoArgsConstructor
@@ -17,10 +17,7 @@ import java.util.UUID;
 public class Cliente {
 
     @Id
-    @GeneratedValue(generator = "uuid4")
-    @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", columnDefinition = "VARCHAR(255)")
-    private UUID id;
+    private String id;
     private String nome;
     private String email;
 }

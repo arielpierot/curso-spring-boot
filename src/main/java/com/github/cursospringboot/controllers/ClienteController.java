@@ -3,6 +3,8 @@ package com.github.cursospringboot.controllers;
 import com.github.cursospringboot.dto.ClienteDTO;
 import com.github.cursospringboot.models.Cliente;
 import com.github.cursospringboot.services.ClienteService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,8 @@ public class ClienteController {
     @Autowired
     private ClienteService service;
 
+    private static final Logger logger = LogManager.getLogger(ClienteController.class);
+
     @GetMapping
     public ResponseEntity<List<Cliente>> listar(){
         var listaClientes = service.listarClientes();
@@ -29,17 +33,19 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<Cliente> criar(@RequestBody ClienteDTO clienteDTO){
         Cliente clienteCriado = service.criar(clienteDTO);
+        logger.info("Cliente {} foi criado", clienteCriado.getNome());
         return new ResponseEntity<>(clienteCriado, HttpStatus.OK);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Cliente> atualizar(@RequestBody ClienteDTO clienteDTO, @PathVariable UUID id){
+    public ResponseEntity<Cliente> atualizar(@RequestBody ClienteDTO clienteDTO, @PathVariable String id){
         Cliente clienteAtualizado = service.atualizar(id, clienteDTO);
+        logger.info("Cliente {} foi atualizado", clienteAtualizado.getNome());
         return new ResponseEntity<>(clienteAtualizado, HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deletar(@PathVariable UUID id) {
+    public ResponseEntity<?> deletar(@PathVariable String id) {
         service.deletar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
