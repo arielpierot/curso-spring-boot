@@ -1,13 +1,7 @@
 package com.github.cursospringboot.services;
 
-import br.com.six2six.fixturefactory.Fixture;
-import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
-import com.github.cursospringboot.dto.ClienteDTO;
-import com.github.cursospringboot.models.Cliente;
-import com.github.cursospringboot.repositories.ClienteRepository;
-import org.junit.BeforeClass;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,9 +9,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.List;
-import java.util.UUID;
+import com.github.cursospringboot.dto.ClienteDTO;
+import com.github.cursospringboot.models.Cliente;
+import com.github.cursospringboot.repositories.ClienteRepository;
+import br.com.six2six.fixturefactory.Fixture;
+import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 @ExtendWith(MockitoExtension.class)
 public class ClienteServiceTest {
