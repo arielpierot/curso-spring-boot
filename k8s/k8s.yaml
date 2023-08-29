@@ -7,7 +7,7 @@ metadata:
   name: curso-spring-boot
   labels:
     # label your deployment
-    app: curso-spring-boot
+    app: curso-spring-boot-deployment
 spec:
   # The number of pods/replicas to run
   replicas: 1
@@ -30,7 +30,56 @@ spec:
           imagePullPolicy: Never
           ports:
             # port for running the container
-            - containerPort: 8080
+            - containerPort: 8082
+        # Add the container name for Kubernetes
+        - name: mongodb
+          # Add the local image name
+          image: mongo:6-jammy
+          # never pull the image policy
+          imagePullPolicy: Never
+          ports:
+            # port for running the container
+            - containerPort: 27017
+        # Add the container name for Kubernetes
+        - name: zookeeper
+          # Add the local image name
+          image: confluentinc/cp-zookeeper:latest
+          # never pull the image policy
+          imagePullPolicy: Never
+          ports:
+            # port for running the container
+            - containerPort: 2181
+          env:
+            - name: ZOOKEEPER_CLIENT_PORT
+              value: "2181"
+        # Add the container name for Kubernetes
+        - name: kafka
+          # Add the local image name
+          image: confluentinc/cp-kafka:latest
+          # never pull the image policy
+          imagePullPolicy: Never
+          ports:
+            # port for running the container
+            - containerPort: 9092
+              name: internal
+            - containerPort: 9094
+              name: outside
+          env:
+            - name: KAFKA_BROKER_ID
+              value: "1"
+            - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+              value: "1"
+            - name: KAFKA_ZOOKEEPER_CONNECT
+              value: "localhost:2181"
+            - name: KAFKA_INTER_BROKER_LISTENER_NAME
+              value: "INTERNAL"
+            - name: KAFKA_LISTENERS
+              value: "INTERNAL://:9092,OUTSIDE://:9094"
+            - name: KAFKA_ADVERTISED_LISTENERS
+              value: "INTERNAL://localhost:9092,OUTSIDE://localhost:9094"
+            - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+              value: "INTERNAL:PLAINTEXT,OUTSIDE:PLAINTEXT"
+
 ---
 # First, add the Service API
 apiVersion: v1
@@ -42,14 +91,14 @@ metadata:
 spec:
   selector:
     # selector that matches the pod
-    app: curso-spring-boot-service-app
+    app: curso-spring-boot-app-service
   # type of service
   type: LoadBalancer
   ports:
     - protocol: TCP
       # port for exposing the service
-      port: 8080
+      port: 8082
       # portfor exposing the pod
-      targetPort: 8080
+      targetPort: 8082
       # port for exposing the node
-      nodePort: 31110
+      nodePort: 31111

@@ -10,6 +10,6 @@ WORKDIR /app
 RUN groupadd -r springapp && useradd --no-log-init -r -g springapp springapp
 COPY --chown=springapp:springapp target/*.jar /app/application.jar
 COPY --chown=springapp:springapp ./src/main/resources/application.properties /app/application.properties
-EXPOSE 8080
+EXPOSE 8082
 USER springapp
 ENTRYPOINT [ "java", "-Dspring.config.import=file:/app/application.properties", "-jar", "application.jar"]
